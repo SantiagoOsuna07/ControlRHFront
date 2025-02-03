@@ -6,20 +6,20 @@ export default function CreateOfferModal({ isOpen, onClose, onCreate }) {
     const [showConfirmation, setShowConfirmation] = useState(false);
 
     const handleCreateClick = () => {
-        setShowConfirmation(true);
+        setShowConfirmation(true);  // Mostrar la confirmación cuando el usuario haga clic en "Crear"
     };
 
     const confirmCreate = () => {
-        onCreate({ title, description });
-        setShowConfirmation(false);
-        onClose();
+        onCreate({ title, description });  // Llamar a onCreate para enviar los datos
+        setShowConfirmation(false);  // Cerrar la confirmación
+        onClose();  // Cerrar el modal
     };
 
-    if (!isOpen) return null;
+    if (!isOpen) return null;  // Si isOpen es false, no renderizar el modal
 
     return (
         <>
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">  {/* Aseguramos que el modal esté por encima de otros elementos */}
             <div className="bg-white p-6 rounded-lg shadow-lg w-96">
                 <h2 className="text-xl font-bold mb-4">Crear Nueva Oferta</h2>
 
@@ -49,7 +49,7 @@ export default function CreateOfferModal({ isOpen, onClose, onCreate }) {
         </div>
 
         {showConfirmation && (
-            <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+            <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">  {/* Mantenemos el z-index para la confirmación también */}
                 <div className="bg-white p-6 rounded-lg shadow-lg w-80">
                     <h3 className="text-lg font-bold mb-4">¿Estás seguro?</h3>
                     <p>¿Desea crear esta oferta laboral?</p>
@@ -66,5 +66,5 @@ export default function CreateOfferModal({ isOpen, onClose, onCreate }) {
             </div>
         )}
     </>
-    )
+    );
 }
