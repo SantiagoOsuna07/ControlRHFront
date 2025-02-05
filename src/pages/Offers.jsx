@@ -3,10 +3,11 @@ import LoggedHeader from "../Components/headerPackage/LoggedHeader";
 import crearOfertaImg from "../assets/Crear.png";
 import editarOfertaImg from "../assets/Edit.png";
 import CreateOfferModal from "../Components/modalPackage/CreateOfferModal";
+import { useNavigate } from "react-router-dom";
 
 export default function Offers() {
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
-  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const navigate = useNavigate();
 
   return (
     <div className="bg-gray-100 min-h-screen">
@@ -41,7 +42,7 @@ export default function Offers() {
           {/* Card Editar Oferta */}
           <div
             className="m-6 group px-16 py-12 bg-white rounded-lg flex flex-col items-center justify-center gap-6 relative after:absolute after:h-full after:bg-[#d0b3ff] z-20 shadow-lg after:-z-20 after:w-full after:inset-0 after:rounded-lg transition-all duration-300 hover:transition-all hover:duration-300 after:transition-all after:duration-500 after:hover:transition-all after:hover:duration-500 overflow-hidden cursor-pointer after:-translate-y-full after:hover:translate-y-0"
-            onClick={() => setIsEditModalOpen(true)}
+            onClick={() => navigate("/offers-list")}
           >
             <img
               src={editarOfertaImg}

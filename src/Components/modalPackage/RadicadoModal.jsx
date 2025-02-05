@@ -1,14 +1,19 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-export default function LoginModal({ onClose }) {
+export default function RadicadoModal({ onClose }) {
+    const [radicado, setRadicado] = useState("");  // Inicializa el estado con una cadena vacía
     const navigate = useNavigate();
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Aquí no validamos el radicado, solo redirigimos a la página ProcessState
+        // Aquí puedes realizar cualquier validación del radicado si es necesario
         onClose();
-        navigate("/process-state");  // Redirige a la página ProcessState sin radicado
+        navigate("/process-state", { state: { radicado } });  // Pasamos el radicado como parte del estado
+    };
+
+    const handleInputChange = (e) => {
+        setRadicado(e.target.value);  // Actualiza el estado con el valor ingresado
     };
 
     return (
@@ -26,12 +31,31 @@ export default function LoginModal({ onClose }) {
                 <div className="mx-auto max-w-lg text-center">
                     <h1 className="text-2xl font-bold sm:text-3xl">Estado Proceso</h1>
                     <p className="mt-4 text-gray-600">
-                        No es necesario ingresar un radicado. Solo haz clic en Entrar para ver el estado.
+                        Ingresa el número de radicado para ver el estado.
                     </p>
                 </div>
 
                 {/* Formulario */}
                 <form className="mx-auto mb-0 mt-8 max-w-md" onSubmit={handleSubmit}>
+                    {/* Campo de entrada para el radicado */}
+                    <div className="mt-4">
+                        <label
+                            htmlFor="radicado"
+                            className="block text-sm font-medium text-gray-700"
+                        >
+                            Número de Radicado
+                        </label>
+                        <input
+                            id="radicado"
+                            type="text"
+                            value={radicado}  // Vincula el valor del input al estado radicado
+                            onChange={handleInputChange}  // Actualiza el estado cuando el valor cambia
+                            className="mt-1 p-2 w-full border border-gray-300 rounded-lg"
+                            placeholder="Ingrese el número de radicado"
+                            required
+                        />
+                    </div>
+
                     {/* Botón "Entrar" */}
                     <div className="flex justify-end">
                         <button

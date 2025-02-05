@@ -2,10 +2,12 @@ import React, { useState, useRef, useEffect } from "react";
 import ControlImage from "/src/assets/CONTROLRH.png";
 import { FaRegUserCircle } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import AspirantsModal from "../modalPackage/AspirantsModal";
 
 const LoggedHeaderOf = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
 
   const username = localStorage.getItem("user");
@@ -43,6 +45,16 @@ const LoggedHeaderOf = () => {
 
       {/* Área del usuario con menú */}
       <div className="flex items-center space-x-6">
+
+        <span
+          className="cursor-pointer hover:text-gray-300 font-bold text-2xl"
+          onClick={() => setIsModalOpen(true)}
+        >
+          Aspirantes
+        </span>
+
+        <AspirantsModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+
 
         <span 
             className="cursor-pointer hover:text-gray-300 font-bold text-2xl"

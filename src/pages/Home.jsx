@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../Components/headerPackage/Header";
 import Card from "../Components/cardPackage/Card";
-import LoginModal from "../Components/modalPackage/LoginModal";
-
+import RadicadoModal from "../Components/modalPackage/RadicadoModal";
 export default function Home() {
 
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -39,7 +38,7 @@ export default function Home() {
                 </div>
             </div>
 
-            {isModalOpen && <LoginModal onClose={handleModalClose} />}
+            {isModalOpen && <RadicadoModal onClose={handleModalClose} />}
         </div>
     );
 }

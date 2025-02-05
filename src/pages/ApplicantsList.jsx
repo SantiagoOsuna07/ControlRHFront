@@ -44,7 +44,7 @@ export default function ApplicantsList({ username, onLogout }) {
 
                 // Ahora que tenemos los procesos, obtenemos los aspirantes
                 const applicantsResponse = await fetch(
-                    "http://192.168.40.106/Finanzauto.ControlRH.Api/api/candidates/full-candidate",
+                    "http://192.168.40.106/Finanzauto.ControlRH.Api/api/candidate/full-candidate",
                     {
                         method: "GET",
                         headers: {

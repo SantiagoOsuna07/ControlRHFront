@@ -1,9 +1,34 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../Components/headerPackage/Header";
 import ModalPostulacion from "../Components/modalPackage/ModalPostulacion";
 
 export default function AvailablePositions() {
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [offers, setOffers] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        const fetchOffers = async () => {
+            try {
+                const response = await fetch("http://192.168.40.106/Finanzauto.ControlRH.Api/api/Offers/full-offers");
+
+                if (!response.ok) {
+                    throw new Error(`Error HTTP: ${response.status}`);
+                }
+
+                const data = await response.json();
+                setOffers(data);
+            } catch (error) {
+                setError("Error al obtener las ofertas. Inténtalo nuevamente.");
+                console.error("Error al cargar las ofertas:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchOffers();
+    }, []);
 
     const handleModalOpen = () => {
         setIsModalOpen(true);
@@ -12,14 +37,6 @@ export default function AvailablePositions() {
     const handleModalClose = () => {
         setIsModalOpen(false);
     };
-
-    // Asegurar que la variable ofertas está dentro del componente
-    const ofertas = [
-        { titulo: "Desarrollador Backend", descripcion: "Únete a nuestro equipo para desarrollar la infraestructura detrás de nuestros sistemas." },
-        { titulo: "Diseñador UX/UI", descripcion: "Crea experiencias excepcionales para nuestros usuarios a través de diseños intuitivos y funcionales." },
-        { titulo: "Gerente de Marketing", descripcion: "Lidera nuestras estrategias de marketing y crecimiento para llegar a nuevos clientes." },
-        { titulo: "Analista de Datos", descripcion: "Analiza datos para ayudar a la toma de decisiones estratégicas y mejorar nuestros procesos." }
-    ];
 
     return (
         <div>
@@ -45,28 +62,36 @@ export default function AvailablePositions() {
                             Vacantes Disponibles
                         </h2>
 
-                        {/* Lista de ofertas */}
-                        <ul className="space-y-4">
-                            {ofertas.map((oferta, index) => (
-                                <li key={index} className="p-4 bg-gray-50 rounded-lg shadow-md hover:bg-purple-50 transition-all duration-300">
-                                    <div className="flex justify-between items-center">
-                                        <div>
-                                            <h3 className="text-xl font-semibold text-gray-800">{oferta.titulo}</h3>
-                                            <p className="text-gray-600">{oferta.descripcion}</p>
+                        {loading ? (
+                            <p className="text-center text-gray-500">Cargando ofertas...</p>
+                        ) : error ? (
+                            <p className="text-center text-red-500">{error}</p>
+                        ) : offers.length === 0 ? (
+                            <p className="text-center text-gray-500">No hay ofertas disponibles.</p>
+                        ) : (
+                            <ul className="space-y-4">
+                                {offers.map((offer) => (
+                                    <li key={offer.id} className="p-4 bg-gray-50 rounded-lg shadow-md hover:bg-purple-50 transition-all duration-300">
+                                        <div className="flex justify-between items-center">
+                                            <div>
+                                                <h3 className="text-xl font-semibold text-gray-800">{offer.offerName}</h3>
+                                                <p className="text-gray-600">{offer.offerDescription}</p>
+                                            </div>
+                                            <button
+                                                className="ml-4 px-4 py-2 text-sm text-white bg-black border-2 border-black rounded-full hover:bg-transparent hover:text-black transition-colors duration-200 focus:outline-none"
+                                                onClick={handleModalOpen}
+                                            >
+                                                Postularse
+                                            </button>
                                         </div>
-                                        <button
-                                            className="ml-4 px-4 py-2 text-sm text-white bg-black border-2 border-black rounded-full hover:bg-transparent hover:text-black transition-colors duration-200 focus:outline-none"
-                                            onClick={handleModalOpen}
-                                        >
-                                            Postularse
-                                        </button>
-                                    </div>
-                                </li>
-                            ))}
-                        </ul>
+                                    </li>
+                                ))}
+                            </ul>
+                        )}
                     </div>
                 </div>
 
+                {/* Modal para postulación */}
                 <ModalPostulacion isOpen={isModalOpen} onClose={handleModalClose} />
             </div>
         </div>

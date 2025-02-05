@@ -11,6 +11,7 @@ import NewHiresInventory from "./pages/NewHiresInventory";
 import ProcessState from "./pages/ProcessState";
 import EmployeeInventory from "./pages/EmployeeInventory";
 import Offers from "./pages/Offers";
+import OffersList from "./pages/OffersList";
 
 export default function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -38,6 +39,7 @@ export default function App() {
         <Route path="/process-state" element={<ProcessState />} />
         <Route path="/employee-inventory/:id" element={<EmployeeInventory />} />
         <Route path="/offers" element={<Offers />} />
+        <Route path="/offers-list" element={<OffersList />} />
       </Routes>
     </Router>
   );

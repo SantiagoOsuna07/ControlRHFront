@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import Header from "../Components/headerPackage/Header";
+
 const etapas = [
     "Análisis de hoja de vida",
     "Entrevista técnica",
@@ -9,16 +10,37 @@ const etapas = [
 ];
 
 const ProcessState = () => {
-    const { radicado } = useParams();
+    const { state } = useLocation();
+    const { radicado } = state || {};
     const [estadoProceso, setEstadoProceso] = useState(null);
 
     useEffect(() => {
-        const estado = {
-            nombre: "Nicolas Perez",
-            etapaActual: 1,
-            detalles: "En estos momentos estamos realizando la entrevista técnica. Pronto recibirá más información."
-        };
-        setEstadoProceso(estado);
+        if (radicado) {
+            const fetchEstadoProceso = async () => {
+                try {
+                    const response = await fetch(
+                        `http://192.168.40.106/Finanzauto.ControlRH.Api/api/Candidate/validate-fileNumber/${radicado}`
+                    );
+
+                    if (!response.ok) {
+                        throw new Error("Error al obtener los datos del proceso");
+                    }
+
+                    const data = await response.json();
+
+                    const estado = {
+                        nombre: data.nameCandidate,
+                        etapaActual: data.process.progressId,
+                        detalles: data.process.nameProcess,
+                    };
+                    setEstadoProceso(estado);
+                } catch (error) {
+                    console.error("Error al obtener el estado del proceso:", error);
+                }
+            };
+
+            fetchEstadoProceso();
+        }
     }, [radicado]);
 
     if (!estadoProceso) {

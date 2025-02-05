@@ -20,7 +20,7 @@ export default function EmployeesList({ username, onLogout }) {
                 }
 
                 const response = await fetch(
-                    "http://192.168.40.106/Finanzauto.ControlRH.Api/api/candidates/full-boss", {
+                    "http://192.168.40.106/Finanzauto.ControlRH.Api/api/Boss/full-boss", {
                         method: "GET",
                         headers: {
                             "Authorization": `Bearer ${token}`,
