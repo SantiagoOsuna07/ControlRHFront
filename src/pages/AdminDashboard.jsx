@@ -21,7 +21,7 @@ export default function AdminDashboard({ username, onLogout }) {
             <LoggedHeaderOf username="Admin" onLogout={onLogout} />
 
             <div className="flex justify-center items-center min-h-screen bg-gray-100">
-                <div className="flex flex-wrap gap-8 justify-center mt-1">
+                <div className="flex flex-wrap gap-8 justify-center w-full mt-1">
                     <Card   
                         title="Lista de aspirantes"
                         description="Ver todos los aspirantes que hay en el momento."

@@ -116,7 +116,7 @@ export default function EmployeeInventory() {
 
                                 {/* Botón de Solicitar a la derecha si el ítem está en false */}
                                 {!inventory?.[item.key] && (
-                                    <button className="bg-black text-white px-6 py-2 rounded-lg shadow-md hover:bg-blue-600 focus:outline-none transition-all">
+                                    <button className="bg-black text-white px-6 py-2 rounded-lg shadow-md hover:bg-gray-800 focus:outline-none transition-all">
                                         Solicitar
                                     </button>
                                 )}

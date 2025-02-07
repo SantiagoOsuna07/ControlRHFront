@@ -11,9 +11,9 @@ const Header = () => {
             className="h-24 w-24"
           />
           <div class="relative inline-block ml-5">
-            <span class="text-2xl md:text-3xl font-bold">
+            <Link to="/" className="text-2xl md:text-3xl font-bold">
               CONTROLRH
-            </span>
+            </Link>
           <span class="absolute -bottom-1 left-0 w-full h-1 bg-gradient-to-r from-white via-purple-300 to-purple-500 rounded-full"></span>
           </div>
 

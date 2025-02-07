@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import ControlImage from "/src/assets/CONTROLRH.png";
 import { FaRegUserCircle } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const LoggedHeader = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -34,7 +34,7 @@ const LoggedHeader = () => {
 
       {/* Título */}
       <div className="relative inline-block ml-5 ">
-        <span className="text-2xl md:text-3xl font-bold">CONTROLRH</span>
+        <Link to="/admin-dashboard" className="text-2xl md:text-3xl font-bold">CONTROLRH</Link>
         <span className="absolute -bottom-1 left-0 w-full h-1 bg-gradient-to-r from-white via-purple-300 to-purple-500 rounded-full"></span>
       </div>
 

@@ -160,6 +160,7 @@ export default function EmployeesList({ username, onLogout }) {
                                         <td className="border border-gray-300 px-4 py-2 text-center">
                                             <button 
                                                 className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded"
+                                                onClick={() => navigate(`/employee-profile/${employee.cedula}`)}
                                             >
                                                 Ver
                                             </button>
