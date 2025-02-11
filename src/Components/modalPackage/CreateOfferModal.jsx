@@ -64,10 +64,8 @@ export default function CreateOfferModal({ isOpen, onClose }) {
 
     return (
         <>
-            {/* Modal principal */}
             <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
                 <div className="bg-white p-6 rounded-lg shadow-lg w-96 relative">
-                    {/* Botón para cerrar dentro del modal */}
                     <button onClick={onClose} className="absolute top-4 right-4 text-gray-600 hover:text-gray-900 text-xl">
                         ✖
                     </button>
@@ -102,11 +100,9 @@ export default function CreateOfferModal({ isOpen, onClose }) {
                 </div>
             </div>
 
-            {/* Modal de confirmación */}
             {showConfirmation && (
                 <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
                     <div className="bg-white p-6 rounded-lg shadow-lg w-80 relative">
-                        {/* Botón para cerrar el modal de confirmación dentro del modal */}
                         <button onClick={() => setShowConfirmation(false)} className="absolute top-4 right-4 text-gray-600 hover:text-gray-900 text-xl">
                             ✖
                         </button>

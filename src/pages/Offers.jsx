@@ -11,23 +11,18 @@ export default function Offers() {
 
   return (
     <div className="bg-gray-100 min-h-screen">
-      {/* Header */}
       <LoggedHeader />
 
-      {/* Contenido principal */}
       <div className="container mx-auto px-4 py-20 pt-36 text-center">
-        {/* Título mejorado */}
         <h1 className="text-5xl font-extrabold text-black mb-12 relative inline-block">
           Gestión de Ofertas
           <span className="block w-24 h-1 bg-purple-500 mx-auto mt-2 rounded-full"></span>
         </h1>
 
-        {/* Contenedor de los botones/cards */}
         <div className="flex justify-center space-x-14">
-          {/* Card Crear Oferta */}
           <div
             className="m-6 group px-16 py-12 bg-white rounded-lg flex flex-col items-center justify-center gap-6 relative after:absolute after:h-full after:bg-[#d0b3ff] z-20 shadow-lg after:-z-20 after:w-full after:inset-0 after:rounded-lg transition-all duration-300 hover:transition-all hover:duration-300 after:transition-all after:duration-500 after:hover:transition-all after:hover:duration-500 overflow-hidden cursor-pointer after:-translate-y-full after:hover:translate-y-0"
-            onClick={() => setIsCreateModalOpen(true)}  // Abrir modal al hacer clic
+            onClick={() => setIsCreateModalOpen(true)}
           >
             <img
               src={crearOfertaImg}
@@ -39,7 +34,6 @@ export default function Offers() {
             </p>
           </div>
 
-          {/* Card Editar Oferta */}
           <div
             className="m-6 group px-16 py-12 bg-white rounded-lg flex flex-col items-center justify-center gap-6 relative after:absolute after:h-full after:bg-[#d0b3ff] z-20 shadow-lg after:-z-20 after:w-full after:inset-0 after:rounded-lg transition-all duration-300 hover:transition-all hover:duration-300 after:transition-all after:duration-500 after:hover:transition-all after:hover:duration-500 overflow-hidden cursor-pointer after:-translate-y-full after:hover:translate-y-0"
             onClick={() => navigate("/offers-list")}
@@ -56,14 +50,13 @@ export default function Offers() {
         </div>
       </div>
 
-      {/* Modal Crear Oferta */}
       {isCreateModalOpen && (
         <CreateOfferModal
-          isOpen={isCreateModalOpen}  // Se pasa el estado isOpen aquí
-          onClose={() => setIsCreateModalOpen(false)}  // Cerrar modal
+          isOpen={isCreateModalOpen}
+          onClose={() => setIsCreateModalOpen(false)}
           onCreate={(offer) => {
-            console.log("Oferta creada:", offer);  // Aquí puedes manejar la lógica después de crear la oferta
-            setIsCreateModalOpen(false);  // Cerrar el modal tras crear
+            console.log("Oferta creada:", offer);
+            setIsCreateModalOpen(false);
           }}
         />
       )}

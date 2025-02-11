@@ -18,7 +18,6 @@ export default function ApplicantsList({ username, onLogout }) {
                     return;
                 }
 
-                // Obtener procesos
                 const processResponse = await fetch(
                     "http://192.168.40.106/Finanzauto.ControlRH.Api/api/Process/full-processes",
                     {
@@ -42,7 +41,6 @@ export default function ApplicantsList({ username, onLogout }) {
 
                 setProcesses(processesMap);
 
-                // Ahora que tenemos los procesos, obtenemos los aspirantes
                 const applicantsResponse = await fetch(
                     "http://192.168.40.106/Finanzauto.ControlRH.Api/api/candidate/full-candidate",
                     {

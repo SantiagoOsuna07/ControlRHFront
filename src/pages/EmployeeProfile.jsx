@@ -30,7 +30,6 @@ export default function EmployeeProfile() {
             <div className="min-h-screen bg-gray-100 py-10 mt-28 flex justify-center">
                 <div className="w-full max-w-5xl bg-white shadow-lg rounded-lg overflow-hidden p-10">
                     
-                    {/* Encabezado */}
                     <div className="flex items-center space-x-6 border-b pb-6">
                         <div className="w-24 h-24 bg-gray-300 rounded-full flex items-center justify-center text-3xl font-bold text-white">
                             {employee.name.charAt(0)}
@@ -41,7 +40,6 @@ export default function EmployeeProfile() {
                         </div>
                     </div>
 
-                    {/* Información de contacto */}
                     <div className="mt-6 grid grid-cols-2 gap-6">
                         <div className="flex items-center space-x-3">
                             <FaEnvelope className="text-purple-600" />
@@ -59,7 +57,6 @@ export default function EmployeeProfile() {
                         </div>
                     </div>
 
-                    {/* Insignias */}
                     <div className="mt-6">
                         <h3 className="text-xl font-semibold text-gray-800 mb-2">🏅 Insignias</h3>
                         <div className="flex flex-wrap gap-3">
@@ -71,7 +68,6 @@ export default function EmployeeProfile() {
                         </div>
                     </div>
 
-                    {/* Habilidades */}
                     <div className="mt-6">
                         <h3 className="text-xl font-semibold text-gray-800 mb-2">💡 Habilidades</h3>
                         <div className="space-y-4">
@@ -92,7 +88,6 @@ export default function EmployeeProfile() {
                         </div>
                     </div>
 
-                    {/* Proyectos */}
                     <div className="mt-6">
                         <h3 className="text-xl font-semibold text-gray-800 mb-2">🚀 Proyectos en la empresa</h3>
                         <ul className="grid grid-cols-2 gap-4">

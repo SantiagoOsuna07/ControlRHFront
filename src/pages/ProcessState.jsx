@@ -9,7 +9,7 @@ const ProcessState = () => {
     const [estadoProceso, setEstadoProceso] = useState(null);
     const [etapas, setEtapas] = useState([]);
 
-    // 🔹 Cargar todas las etapas desde la API
+    // Cargar todas las etapas desde la API
     useEffect(() => {
         const fetchEtapas = async () => {
             try {
@@ -26,7 +26,7 @@ const ProcessState = () => {
         fetchEtapas();
     }, []);
 
-    // 🔹 Cargar el estado del proceso del aspirante
+    // Cargar el estado del proceso del aspirante
     useEffect(() => {
         if (radicado) {
             const fetchEstadoProceso = async () => {
@@ -58,9 +58,9 @@ const ProcessState = () => {
         return <div>Cargando...</div>;
     }
 
-    // 🔹 Buscar la etapa actual del aspirante en la lista de procesos
+    // Buscar la etapa actual del aspirante en la lista de procesos
     const etapaIndex = etapas.findIndex(etapa => etapa.progressId === estadoProceso.etapaActual);
-    const etapaFinal = etapaIndex !== -1 ? etapaIndex : 0; // Si no encuentra, poner en la primera etapa
+    const etapaFinal = etapaIndex !== -1 ? etapaIndex : 0;
 
     return (
         <div className="p-8">
@@ -70,7 +70,6 @@ const ProcessState = () => {
                 <p className="mt-4 text-xl">Tu proceso va así:</p>
             </div>
 
-            {/* Barra de progreso */}
             <div className="relative mb-8">
                 <div className="h-2 bg-gray-300 rounded-full">
                     <div 
@@ -90,7 +89,6 @@ const ProcessState = () => {
                 </div>
             </div>
 
-            {/* Información de la etapa actual */}
             <div className="border border-gray-300 rounded-lg p-4">
                 <h2 className="text-xl font-semibold">Actualmente estás en el paso:</h2>
                 <p className="mt-2 text-lg">{etapas[etapaFinal].nameProcess}</p>

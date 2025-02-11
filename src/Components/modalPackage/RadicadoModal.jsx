@@ -7,9 +7,8 @@ export default function RadicadoModal({ onClose }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Aquí puedes realizar cualquier validación del radicado si es necesario
         onClose();
-        navigate("/process-state", { state: { radicado } });  // Pasamos el radicado como parte del estado
+        navigate("/process-state", { state: { radicado } });
     };
 
     const handleInputChange = (e) => {
@@ -19,7 +18,6 @@ export default function RadicadoModal({ onClose }) {
     return (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
             <div className="relative bg-white rounded-lg shadow-lg p-8 max-w-lg w-full">
-                {/* Botón de cierre */}
                 <button
                     className="absolute top-4 right-4 text-gray-500 hover:text-gray-800"
                     onClick={onClose}
@@ -27,7 +25,6 @@ export default function RadicadoModal({ onClose }) {
                     ✕
                 </button>
 
-                {/* Contenido del modal */}
                 <div className="mx-auto max-w-lg text-center">
                     <h1 className="text-2xl font-bold sm:text-3xl">Estado Proceso</h1>
                     <p className="mt-4 text-gray-600">
@@ -35,9 +32,7 @@ export default function RadicadoModal({ onClose }) {
                     </p>
                 </div>
 
-                {/* Formulario */}
                 <form className="mx-auto mb-0 mt-8 max-w-md" onSubmit={handleSubmit}>
-                    {/* Campo de entrada para el radicado */}
                     <div className="mt-4">
                         <label
                             htmlFor="radicado"

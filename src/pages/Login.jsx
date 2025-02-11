@@ -17,8 +17,8 @@ const Login = () => {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    user: user, // 🔄 Corrección: usar la variable de estado
-                    passwd: passwd, // 🔄 Corrección: usar la variable de estado
+                    user: user,
+                    passwd: passwd,
                 }),
             });
 

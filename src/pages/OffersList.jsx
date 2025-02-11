@@ -56,7 +56,6 @@ export default function OffersList() {
         setIsEditModalOpen(true);
     };
 
-    // ✅ Esta función solo actualiza el estado, NO hace la petición PUT.
     const handleInputChange = (e) => {
         const { name, value, type, checked } = e.target;
         setUpdatedOffer((prev) => ({
@@ -155,7 +154,7 @@ export default function OffersList() {
                                     type="text"
                                     name="offerName"
                                     value={updatedOffer.offerName}
-                                    onChange={handleInputChange} // ✅ CORREGIDO
+                                    onChange={handleInputChange}
                                     className="block w-full mt-1 p-2 border rounded-md"
                                 />
                             </label>
@@ -165,7 +164,7 @@ export default function OffersList() {
                                 <textarea
                                     name="offerDescription"
                                     value={updatedOffer.offerDescription}
-                                    onChange={handleInputChange} // ✅ CORREGIDO
+                                    onChange={handleInputChange}
                                     className="block w-full mt-1 p-2 border rounded-md"
                                 />
                             </label>
@@ -175,7 +174,7 @@ export default function OffersList() {
                                     type="checkbox"
                                     name="status"
                                     checked={updatedOffer.status}
-                                    onChange={handleInputChange} // ✅ CORREGIDO
+                                    onChange={handleInputChange}
                                     className="mr-2"
                                 />
                                 <span className="text-gray-700">Oferta Activa</span>

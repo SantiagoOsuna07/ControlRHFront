@@ -29,20 +29,17 @@ const LoggedHeader = () => {
 
   return (
     <header className="bg-[#602ba4] text-white p-4 flex items-center justify-between fixed top-0 left-0 w-full shadow-md z-50">
-      {/* Logo */}
+
       <img src={ControlImage} alt="Logo" className="h-24 w-24" />
 
-      {/* Título */}
       <div className="relative inline-block ml-5 ">
         <Link to="/admin-dashboard" className="text-2xl md:text-3xl font-bold">CONTROLRH</Link>
         <span className="absolute -bottom-1 left-0 w-full h-1 bg-gradient-to-r from-white via-purple-300 to-purple-500 rounded-full"></span>
       </div>
 
-      {/* Espaciador para centrar elementos */}
       <div className="flex-grow"></div>
 
         <div ref={menuRef} className="relative">
-        {/* Botón de usuario (con dropdown) */}
         <button
           onClick={() => setMenuOpen(!menuOpen)}
           className="flex items-center bg-white text-black px-4 py-2 rounded-full shadow-md space-x-3 focus:outline-none relative"
@@ -51,7 +48,6 @@ const LoggedHeader = () => {
           <span className="font-semibold text-lg">{username}</span>
         </button>
 
-        {/* Menú desplegable */}
         {menuOpen && (
           <div className="absolute top-full left-0 w-full bg-white shadow-md rounded-full py-2 mt-1 transition-all duration-300">
             <button

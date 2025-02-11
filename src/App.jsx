@@ -13,6 +13,7 @@ import EmployeeInventory from "./pages/EmployeeInventory";
 import Offers from "./pages/Offers";
 import OffersList from "./pages/OffersList";
 import EmployeeProfile from "./pages/EmployeeProfile";
+import AspirantsPage from "./pages/AspirantsPage";
 
 export default function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -42,6 +43,7 @@ export default function App() {
         <Route path="/offers" element={<Offers />} />
         <Route path="/offers-list" element={<OffersList />} />
         <Route path="/employee-profile/:id" element={<EmployeeProfile />} />
+        <Route path="/aspirants-page" element={<AspirantsPage />} />
       </Routes>
     </Router>
   );

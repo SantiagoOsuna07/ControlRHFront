@@ -1,4 +1,4 @@
-import './index.css'; // Asegúrate de que este nombre sea correcto
+import './index.css';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';

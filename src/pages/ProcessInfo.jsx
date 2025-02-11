@@ -12,14 +12,11 @@ export default function ProcessInfo() {
 
     return (
         <div>
-            {/* Header siempre visible */}
             <Header />
 
-            {/* Contenedor principal ajustado con padding para el header */}
             <div className="min-h-screen bg-gray-100 p-8 mt-32">
                 <div className="container mx-auto flex flex-col lg:flex-row gap-8">
                     
-                    {/* Sección grande a la izquierda */}
                     <div className="lg:w-2/3 bg-white rounded-lg shadow-md p-8 relative">
                         <h1 className="text-3xl font-bold text-gray-800 mb-4">¿Cómo es el proceso?</h1>
                         <p className="text-gray-600 leading-relaxed">
@@ -27,7 +24,6 @@ export default function ProcessInfo() {
                         </p>
                         <p className="text-gray-600 mt-2">Estas son las etapas del proceso:</p>
 
-                        {/* Contenedor de etapas con límite de visibilidad */}
                         <ul className="mt-4 space-y-2 list-disc list-inside text-gray-600">
                             <li>
                                 Envío de hoja de vida.
@@ -60,7 +56,6 @@ export default function ProcessInfo() {
                                 </ul>
                             </li>
                             
-                            {/* Botón "Leer más" colocado justo después de Envío de pruebas técnicas */}
                             {!isExpanded && (
                                 <button
                                     onClick={toggleExpand}
@@ -70,7 +65,6 @@ export default function ProcessInfo() {
                                 </button>
                             )}
                             
-                            {/* Etapas ocultas hasta que se expanda */}
                             <div className={`${isExpanded ? "block" : "hidden"}`}>
                                 <li>
                                     Revisión de pruebas técnicas.
@@ -85,7 +79,6 @@ export default function ProcessInfo() {
                                     </ul>
                                 </li>
                                 
-                                {/* Botón "Leer menos" */}
                                 <button
                                     onClick={toggleExpand}
                                     className="mt-4 text-purple-600 hover:underline font-semibold"
@@ -96,7 +89,6 @@ export default function ProcessInfo() {
                         </ul>
                     </div>
 
-                    {/* Secciones pequeñas a la derecha */}
                     <div className="lg:w-1/3 flex flex-col gap-8">
                         <div className="bg-white rounded-lg shadow-md p-6">
                             <h2 className="text-xl font-bold text-gray-800 mb-2">Documentos requeridos</h2>
@@ -126,7 +118,6 @@ export default function ProcessInfo() {
                 </div>
             </div>
 
-            {/* Modal */}
             {isModalOpen && <RadicadoModal onClose={handleModalClose} />}
         </div>
     );

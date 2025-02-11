@@ -4,6 +4,7 @@ import ModalPostulacion from "../Components/modalPackage/ModalPostulacion";
 
 export default function AvailablePositions() {
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [selectedJobTitle, setSelectedJobTitle] = useState("");
     const [offers, setOffers] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -30,23 +31,22 @@ export default function AvailablePositions() {
         fetchOffers();
     }, []);
 
-    const handleModalOpen = () => {
+    const handleModalOpen = (jobTitle) => {
+        setSelectedJobTitle(jobTitle); // Guardamos el nombre del puesto seleccionado
         setIsModalOpen(true);
     };
 
     const handleModalClose = () => {
         setIsModalOpen(false);
+        setSelectedJobTitle(""); // Limpiamos el puesto seleccionado al cerrar el modal
     };
 
     return (
         <div>
-            {/* Header siempre visible */}
             <Header />
 
-            {/* Contenedor principal con padding */}
             <div className="min-h-screen bg-gray-100 p-8 mt-32">
                 <div className="container mx-auto flex flex-col gap-8">
-                    {/* Sección principal con título y mensaje introductorio */}
                     <div className="bg-white rounded-lg shadow-md p-8">
                         <h1 className="text-4xl font-extrabold text-gray-800 mb-6 text-center">
                             ¡Explora las ofertas disponibles en nuestra empresa!
@@ -56,7 +56,6 @@ export default function AvailablePositions() {
                         </p>
                     </div>
 
-                    {/* Lista de puestos disponibles */}
                     <div className="bg-white rounded-lg shadow-md p-8">
                         <h2 className="text-3xl font-bold text-gray-800 mb-6">
                             Vacantes Disponibles
@@ -79,7 +78,7 @@ export default function AvailablePositions() {
                                             </div>
                                             <button
                                                 className="ml-4 px-4 py-2 text-sm text-white bg-black border-2 border-black rounded-full hover:bg-transparent hover:text-black transition-colors duration-200 focus:outline-none"
-                                                onClick={handleModalOpen}
+                                                onClick={() => handleModalOpen(offer.offerName)}
                                             >
                                                 Postularse
                                             </button>
@@ -91,8 +90,7 @@ export default function AvailablePositions() {
                     </div>
                 </div>
 
-                {/* Modal para postulación */}
-                <ModalPostulacion isOpen={isModalOpen} onClose={handleModalClose} />
+                <ModalPostulacion isOpen={isModalOpen} onClose={handleModalClose} jobTitle={selectedJobTitle} />
             </div>
         </div>
     );

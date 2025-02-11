@@ -42,7 +42,6 @@ export default function NewHiresInventory({ username, onLogout }) {
         fetchEmployees();
     }, []);
 
-    // Manejar clic en "Ver"
     const handleViewClick = (id) => {
         navigate(`/employee-inventory/${id}`);
     };
