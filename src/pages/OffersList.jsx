@@ -105,26 +105,26 @@ export default function OffersList() {
         <div>
             <LoggedHeader />
             <div className="container mx-auto px-4 py-20 pt-36">
-                <h1 className="text-3xl font-bold text-gray-800 mb-6">Lista de Ofertas</h1>
+                <h1 className="text-3xl font-bold text-gray-800 mb-3 mt-3 text-center">Lista de Ofertas</h1>
 
-                <div className="bg-white p-4 shadow-md rounded-lg">
-                    <table className="min-w-full border-collapse border border-gray-300">
-                        <thead className="bg-gray-200">
+                <div className="bg-white p-6 shadow-lg rounded-lg">
+                    <table className="min-w-full border border-gray-200 shadow-md rounded-lg">
+                        <thead className="bg-[#602ba4] text-white">
                             <tr>
-                                <th className="border border-gray-300 px-4 py-2 text-left">Titulo</th>
-                                <th className="border border-gray-300 px-4 py-2 text-left">Descripción</th>
-                                <th className="border border-gray-300 px-4 py-2 text-left">Acciones</th>
+                                <th className="px-4 py-3 text-left">Titulo</th>
+                                <th className="px-4 py-3 text-left">Descripción</th>
+                                <th className="px-4 py-3 text-center">Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
                             {offers.length > 0 ? (
                                 offers.map((offer) => (
-                                    <tr key={offer.id} className="hover:bg-gray-100">
-                                        <td className="border border-gray-300 px-4 py-2">{offer.offerName}</td>
-                                        <td className="border border-gray-300 px-4 py-2">{offer.offerDescription}</td>
-                                        <td className="border border-gray-300 px-4 py-2">
+                                    <tr key={offer.id} className="border-b hover:bg-gray-100 transition">
+                                        <td className="px-4 py-3">{offer.offerName}</td>
+                                        <td className="px-4 py-3">{offer.offerDescription}</td>
+                                        <td className="px-4 py-3 text-center">
                                             <button
-                                                className="bg-blue-500 text-white px-3 py-1 rounded"
+                                                className="flex items-center justify-center w-full px-4 py-3 text-center text-white duration-200 bg-black border-2 border-black rounded-full hover:bg-transparent hover:border-black hover:text-black focus:outline-none focus-visible:outline-black text-sm focus-visible:ring-black"
                                                 onClick={() => handleEditClick(offer)}
                                             >
                                                 Editar
@@ -145,50 +145,57 @@ export default function OffersList() {
 
                 {isEditModalOpen && (
                     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-                        <div className="bg-white p-6 rounded-lg shadow-lg w-1/3">
-                            <h2 className="text-xl font-bold mb-4">Editar Oferta</h2>
+                        <div className="bg-white p-6 rounded-lg shadow-lg w-96 relative">
+                            <button
+                                className="absolute top-3 right-3 text-gray-600 hover:text-gray-900 text-xl"
+                                onClick={() => setIsEditModalOpen(false)}
+                            >
+                                X
+                            </button>
 
-                            <label className="block mb-2">
-                                <span className="text-gray-700">Titulo</span>
-                                <input 
+                            <h2 className="text-2xl font-bold text-gray-800 mb-4 text-center">Editar Oferta</h2>
+
+                            <label className="block mb-3">
+                                <span className="text-gray-700">Título</span>
+                                <input
                                     type="text"
                                     name="offerName"
                                     value={updatedOffer.offerName}
                                     onChange={handleInputChange}
-                                    className="block w-full mt-1 p-2 border rounded-md"
+                                    className="block w-full mt-1 p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
                                 />
                             </label>
 
-                            <label className="block mb-2">
+                            <label className="block mb-3">
                                 <span className="text-gray-700">Descripción</span>
                                 <textarea
                                     name="offerDescription"
                                     value={updatedOffer.offerDescription}
                                     onChange={handleInputChange}
-                                    className="block w-full mt-1 p-2 border rounded-md"
+                                    className="block w-full mt-1 p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
                                 />
                             </label>
 
-                            <label className="flex items-center mb-4">
-                                <input
+                            <label className="flex items-center mb-4 cursor-pointer">
+                                <input 
                                     type="checkbox"
                                     name="status"
                                     checked={updatedOffer.status}
-                                    onChange={handleInputChange}
-                                    className="mr-2"
+                                    onChange={(e) => setUpdatedOffer((prev) => ({ ...prev, status: e.target.checked }))}
+                                    className="mr-2 w-5 h-5 text-purple-600 border-gray-300 rounded focus:ring-purple-500"
                                 />
                                 <span className="text-gray-700">Oferta Activa</span>
                             </label>
 
                             <div className="flex justify-end space-x-2">
                                 <button 
-                                    className="bg-gray-500 text-white px-4 py-2 rounded"
+                                    className="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded transition"
                                     onClick={() => setIsEditModalOpen(false)}
                                 >
                                     Cancelar
                                 </button>
                                 <button
-                                    className="bg-green-500 text-white px-4 py-2 rounded"
+                                    className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded transition"
                                     onClick={handleSaveChanges}
                                 >
                                     Guardar Cambios

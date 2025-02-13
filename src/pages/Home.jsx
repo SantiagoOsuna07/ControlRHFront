@@ -17,12 +17,12 @@ export default function Home() {
     return (
         <div>
             <Header />
-            <div className="flex justify-center items-center min-h-screen bg-gray-100">
+            <div className="flex justify-center items-center min-h-screen bg-gray-100 mt-12">
                 <div className="flex gap-8">
                     <div className="mt-16"></div>
                     <Card 
                         title="Como es el proceso" 
-                        description="Observar cada etapa del proceso de contratación"
+                        description="Observar cada etapa de contratación"
                         onClick={handleProcessRedirect}
                     />
                     <Card 
@@ -32,7 +32,7 @@ export default function Home() {
                     />
                     <Card 
                         title="Ofertas Disponibles" 
-                        description="Ver las ofertas que hay en el momento de la empresa"
+                        description="Ver las ofertas de la empresa"
                         onClick={handleOffersRedirect}
                     />
                 </div>

@@ -30,7 +30,7 @@ export default function ApplicantsList({ username, onLogout }) {
                 );
 
                 if (!processResponse.ok) {
-                    throw new Error(`Error HTTP: ${processResponse.status} - ${processResponse.statusText}`);
+                    throw new Error(`Error HTTP: ${processResponse.status}`);
                 }
 
                 const processData = await processResponse.json();
@@ -53,17 +53,19 @@ export default function ApplicantsList({ username, onLogout }) {
                 );
 
                 if (!applicantsResponse.ok) {
-                    throw new Error(`Error HTTP: ${applicantsResponse.status} - ${applicantsResponse.statusText}`);
+                    throw new Error(`Error HTTP: ${applicantsResponse.status}`);
                 }
 
                 const applicantsData = await applicantsResponse.json();
                 console.log("Aspirantes cargados:", applicantsData);
 
                 const transformedData = applicantsData.map((applicant) => ({
+                    id: applicant.id,
                     nombre: applicant.nameCandidate,
                     correo: applicant.emailCandidate,
                     cargo: applicant.type,
                     estado: processesMap[applicant.processId] || "Desconocido",
+                    processId: applicant.processId,
                 }));
 
                 setApplicants(transformedData);
@@ -79,11 +81,72 @@ export default function ApplicantsList({ username, onLogout }) {
     const handleFilterChange = (event) => {
         const process = event.target.value;
         setSelectedProcess(process);
+        setFilteredApplicants(
+            process === "" ? applicants : applicants.filter((applicant) => applicant.estado === process)
+        );
+    };
 
-        if (process === "") {
-            setFilteredApplicants(applicants);
-        } else {
-            setFilteredApplicants(applicants.filter((applicant) => applicant.estado === process));
+    const handleProcessChange = async (applicant, newProcessId) => {
+        console.log("🟢 handleProcessChange ejecutado con:", { applicant, newProcessId });
+
+        const token = localStorage.getItem("token");
+        if (!token) {
+            console.error("🔴 No se encontró el token. Inicia sesión nuevamente.");
+            return;
+        }
+
+        const updatedData = {
+            id: applicant.id,
+            processId: newProcessId,
+            type: applicant.cargo,
+            nameCandidate: applicant.nombre,
+            emailCandidate: applicant.correo,
+            phoneCandidate: applicant.phone || "0000000000"
+        };
+
+        console.log("📤 Enviando solicitud PUT con datos:", updatedData);
+
+        try {
+            const response = await fetch(
+                `http://192.168.40.106/Finanzauto.ControlRH.Api/api/Candidate/update-processId?id=${applicant.id}`,
+                {
+                    method: "PUT",
+                    headers: {
+                        "Authorization": `Bearer ${token}`,
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(updatedData),
+                }
+            );
+
+            const responseText = await response.text();
+            console.log("📥 Respuesta del backend:", response.status, responseText);
+
+            if (!response.ok) {
+                throw new Error(`⚠️ Error HTTP: ${response.status} - ${responseText}`);
+            }
+
+            console.log("✅ Proceso actualizado correctamente");
+
+            // Actualizar la UI inmediatamente después del cambio
+            setApplicants((prev) =>
+                prev.map((app) =>
+                    app.id === applicant.id
+                        ? { ...app, estado: processes[newProcessId], processId: newProcessId }
+                        : app
+                )
+            );
+
+            setFilteredApplicants((prev) =>
+                prev.map((app) =>
+                    app.id === applicant.id
+                        ? { ...app, estado: processes[newProcessId], processId: newProcessId }
+                        : app
+                )
+            );
+
+        } catch (error) {
+            console.error("🔴 Error en handleProcessChange:", error);
         }
     };
 
@@ -116,11 +179,11 @@ export default function ApplicantsList({ username, onLogout }) {
 
                 <div className="bg-white p-4 shadow-md rounded-lg">
                     <table className="min-w-full border-collapse border border-gray-300">
-                        <thead className="bg-gray-200">
+                        <thead className="bg-[#602ba4] text-white">
                             <tr>
                                 <th className="border border-gray-300 px-4 py-2 text-left">Nombre</th>
                                 <th className="border border-gray-300 px-4 py-2 text-left">Correo</th>
-                                <th className="border border-gray-300 px-4 py-2 text-left">Cargo al que aspira</th>
+                                <th className="border border-gray-300 px-4 py-2 text-left">Cargo</th>
                                 <th className="border border-gray-300 px-4 py-2 text-left">Estado del proceso</th>
                             </tr>
                         </thead>
@@ -131,7 +194,19 @@ export default function ApplicantsList({ username, onLogout }) {
                                         <td className="border border-gray-300 px-4 py-2">{applicant.nombre}</td>
                                         <td className="border border-gray-300 px-4 py-2">{applicant.correo}</td>
                                         <td className="border border-gray-300 px-4 py-2">{applicant.cargo}</td>
-                                        <td className="border border-gray-300 px-4 py-2">{applicant.estado}</td>
+                                        <td className="border border-gray-300 px-4 py-2">
+                                            <select
+                                                value={applicant.processId}
+                                                className="border rounded-md px-2 py-1"
+                                                onChange={(e) => handleProcessChange(applicant, parseInt(e.target.value))}
+                                            >
+                                                {Object.entries(processes).map(([id, name]) => (
+                                                    <option key={id} value={id}>
+                                                        {name}
+                                                    </option>
+                                                ))}
+                                            </select>
+                                        </td>
                                     </tr>
                                 ))
                             ) : (

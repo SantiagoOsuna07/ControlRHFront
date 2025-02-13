@@ -20,7 +20,7 @@ export default function AdminDashboard({ username, onLogout }) {
         <div>
             <LoggedHeaderOf username="Admin" onLogout={onLogout} />
 
-            <div className="flex justify-center items-center min-h-screen bg-gray-100">
+            <div className="flex justify-center items-center min-h-screen bg-gray-100 mt-12">
                 <div className="flex flex-wrap gap-8 justify-center w-full mt-1">
                     <Card   
                         title="Lista de aspirantes"
@@ -29,17 +29,17 @@ export default function AdminDashboard({ username, onLogout }) {
                     />
                     <Card
                         title="Inventario Empleados"
-                        description="Gestiona el inventario de las nuevas contrataciones de la empresa."
+                        description="Gestiona el inventario de la empresa."
                         onClick={() => navigate("/hires-inventory")}
                     />
                     <Card
                         title="Hojas de vida"
-                        description="Gestiona todas las hojas de vida de los empleados de la compañía."
+                        description="Gestiona todas las hojas de vida"
                         onClick={() => navigate("/employees-list")}
                     />
                     <Card
                         title="Evaluaciones de desempeño"
-                        description="Redirige a la página para realizar las evaluaciones de desempeño."
+                        description="Redirige a evaluaciones de desempeño."
                         onClick={openModal}
                     />
                 </div>
