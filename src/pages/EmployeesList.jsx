@@ -137,8 +137,8 @@ export default function EmployeesList({ username, onLogout }) {
                 </div>
 
                 <div className="bg-white p-4 shadow-md rounded-lg">
-                    <table className="min-w-full border-collapse border border-gray-300">
-                        <thead className="bg-gray-200">
+                    <table className="w-full border border-gray-300 rounded-lg overflow-hidden">
+                        <thead className="bg-[#602ba4] text-white">
                             <tr>
                                 <th className="border border-gray-300 px-4 py-2 text-left">Nombre</th>
                                 <th className="border border-gray-300 px-4 py-2 text-left">Cédula</th>

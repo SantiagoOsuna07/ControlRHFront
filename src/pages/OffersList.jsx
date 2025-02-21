@@ -104,27 +104,27 @@ export default function OffersList() {
     return (
         <div>
             <LoggedHeader />
-            <div className="container mx-auto px-4 py-20 pt-36">
-                <h1 className="text-3xl font-bold text-gray-800 mb-3 mt-3 text-center">Lista de Ofertas</h1>
+            <div className="container mx-auto px-4 py-20 pt-40">
+                <h1 className="text-4xl font-bold text-gray-800 mb-5 text-center">Lista de Ofertas</h1>
 
-                <div className="bg-white p-6 shadow-lg rounded-lg">
-                    <table className="min-w-full border border-gray-200 shadow-md rounded-lg">
+                <div className="bg-white p-8 shadow-xl rounded-xl">
+                    <table className="w-full border border-gray-300 rounded-lg overflow-hidden">
                         <thead className="bg-[#602ba4] text-white">
                             <tr>
-                                <th className="px-4 py-3 text-left">Titulo</th>
-                                <th className="px-4 py-3 text-left">Descripción</th>
-                                <th className="px-4 py-3 text-center">Acciones</th>
+                                <th className="border border-gray-300 px-6 py-3 text-left">Título</th>
+                                <th className="border border-gray-300 px-6 py-3 text-left">Descripción</th>
+                                <th className="border border-gray-300 px-6 py-3 text-left">Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
                             {offers.length > 0 ? (
                                 offers.map((offer) => (
-                                    <tr key={offer.id} className="border-b hover:bg-gray-100 transition">
-                                        <td className="px-4 py-3">{offer.offerName}</td>
-                                        <td className="px-4 py-3">{offer.offerDescription}</td>
-                                        <td className="px-4 py-3 text-center">
+                                    <tr key={offer.id} className="border-b hover:bg-gray-50 transition">
+                                        <td className="border border-gray-300 px-6 py-3 text-left">{offer.offerName}</td>
+                                        <td className="border border-gray-300 px-6 py-3 text-left">{offer.offerDescription}</td>
+                                        <td className="border border-gray-300 px-6 py-3 text-left">
                                             <button
-                                                className="flex items-center justify-center w-full px-4 py-3 text-center text-white duration-200 bg-black border-2 border-black rounded-full hover:bg-transparent hover:border-black hover:text-black focus:outline-none focus-visible:outline-black text-sm focus-visible:ring-black"
+                                                className="px-5 py-2 text-white bg-gradient-to-r from-purple-600 to-purple-800 rounded-lg shadow-md hover:scale-105 transition-transform font-semibold"
                                                 onClick={() => handleEditClick(offer)}
                                             >
                                                 Editar
@@ -134,7 +134,7 @@ export default function OffersList() {
                                 ))
                             ) : (
                                 <tr>
-                                    <td colSpan="3" className="text-center text-gray-500 py-4">
+                                    <td colSpan="3" className="text-center text-gray-500 py-5">
                                         No hay ofertas disponibles.
                                     </td>
                                 </tr>
@@ -144,35 +144,35 @@ export default function OffersList() {
                 </div>
 
                 {isEditModalOpen && (
-                    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-                        <div className="bg-white p-6 rounded-lg shadow-lg w-96 relative">
+                    <div className="fixed inset-0 bg-black bg-opacity-40 flex justify-center items-center">
+                        <div className="bg-white p-8 rounded-xl shadow-2xl w-96 transform scale-95 transition-all">
                             <button
                                 className="absolute top-3 right-3 text-gray-600 hover:text-gray-900 text-xl"
                                 onClick={() => setIsEditModalOpen(false)}
                             >
-                                X
+                                ✖
                             </button>
 
                             <h2 className="text-2xl font-bold text-gray-800 mb-4 text-center">Editar Oferta</h2>
 
                             <label className="block mb-3">
-                                <span className="text-gray-700">Título</span>
+                                <span className="text-gray-700 font-semibold">Título</span>
                                 <input
                                     type="text"
                                     name="offerName"
                                     value={updatedOffer.offerName}
                                     onChange={handleInputChange}
-                                    className="block w-full mt-1 p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+                                    className="block w-full mt-1 p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
                                 />
                             </label>
 
                             <label className="block mb-3">
-                                <span className="text-gray-700">Descripción</span>
+                                <span className="text-gray-700 font-semibold">Descripción</span>
                                 <textarea
                                     name="offerDescription"
                                     value={updatedOffer.offerDescription}
                                     onChange={handleInputChange}
-                                    className="block w-full mt-1 p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+                                    className="block w-full mt-1 p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
                                 />
                             </label>
 
@@ -187,18 +187,18 @@ export default function OffersList() {
                                 <span className="text-gray-700">Oferta Activa</span>
                             </label>
 
-                            <div className="flex justify-end space-x-2">
+                            <div className="flex justify-end space-x-3">
                                 <button 
-                                    className="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded transition"
+                                    className="bg-gray-500 hover:bg-gray-600 text-white px-5 py-2 rounded-lg transition"
                                     onClick={() => setIsEditModalOpen(false)}
                                 >
                                     Cancelar
                                 </button>
                                 <button
-                                    className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded transition"
+                                    className="bg-green-500 hover:bg-green-600 text-white px-5 py-2 rounded-lg transition"
                                     onClick={handleSaveChanges}
                                 >
-                                    Guardar Cambios
+                                    Guardar
                                 </button>
                             </div>
                         </div>

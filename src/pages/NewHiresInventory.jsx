@@ -59,28 +59,28 @@ export default function NewHiresInventory({ username, onLogout }) {
             <LoggedHeader username={username} onLogout={onLogout} />
 
             <div className="container mx-auto px-4 py-20 pt-36">
-                <h1 className="text-3xl font-bold text-gray-800 mb-6 text-center">Inventario Empleados</h1>
+                <h1 className="text-4xl font-extrabold text-gray-800 mb-8 text-center">Inventario de Empleados</h1>
 
-                <div className="bg-white p-4 shadow-md rounded-lg">
-                    <table className="min-w-full border-collapse border border-gray-300">
-                        <thead className="bg-gray-200">
+                <div className="bg-white p-6 shadow-lg rounded-xl overflow-hidden">
+                    <table className="w-full border border-gray-300 rounded-lg overflow-hidden">
+                        <thead className="bg-[#602ba4] text-white text-lg">
                             <tr>
-                                <th className="border border-gray-300 px-4 py-2 text-left">Nombre</th>
-                                <th className="border border-gray-300 px-4 py-2 text-left">Correo</th>
-                                <th className="border border-gray-300 px-4 py-2 text-left">Cargo</th>
-                                <th className="border border-gray-300 px-4 py-2 text-left">Inventario</th>
+                                <th className="border border-gray-300 px-6 py-3 text-left">Nombre</th>
+                                <th className="border border-gray-300 px-6 py-3 text-left">Correo</th>
+                                <th className="border border-gray-300 px-6 py-3 text-left">Cargo</th>
+                                <th className="border border-gray-300 px-6 py-3 text-center">Inventario</th>
                             </tr>
                         </thead>
                         <tbody>
                             {newHires.length > 0 ? (
                                 newHires.map((hire) => (
-                                    <tr key={hire.id} className="hover:bg-gray-100">
-                                        <td className="border border-gray-300 px-4 py-2">{hire.employeeName}</td>
-                                        <td className="border border-gray-300 px-4 py-2">{hire.email}</td>
-                                        <td className="border border-gray-300 px-4 py-2">{hire.position}</td>
-                                        <td className="border border-gray-300 px-4 py-2">
+                                    <tr key={hire.id} className="hover:bg-gray-100 text-gray-700">
+                                        <td className="border border-gray-300 px-6 py-3">{hire.employeeName}</td>
+                                        <td className="border border-gray-300 px-6 py-3">{hire.email}</td>
+                                        <td className="border border-gray-300 px-6 py-3">{hire.position}</td>
+                                        <td className="border border-gray-300 px-6 py-3 text-center">
                                             <button
-                                                className="bg-purple-600 text-white px-4 py-2 rounded-md shadow hover:bg-purple-700 transition"
+                                                className="bg-purple-600 text-white px-5 py-2 rounded-lg shadow-md hover:bg-purple-700 transition duration-200"
                                                 onClick={() => handleViewClick(hire.id)}
                                             >
                                                 Ver
@@ -90,7 +90,7 @@ export default function NewHiresInventory({ username, onLogout }) {
                                 ))
                             ) : (
                                 <tr>
-                                    <td colSpan="4" className="text-center py-4 text-gray-600">
+                                    <td colSpan="4" className="text-center py-6 text-gray-500 text-lg">
                                         No hay empleados registrados.
                                     </td>
                                 </tr>

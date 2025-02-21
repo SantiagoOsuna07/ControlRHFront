@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { strong } from "framer-motion/client";
 
 const ModalPostulacion = ({ isOpen, onClose, jobTitle }) => {
     const [formData, setFormData] = useState({
@@ -13,6 +14,7 @@ const ModalPostulacion = ({ isOpen, onClose, jobTitle }) => {
     });
 
     const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
+    const [radicadoNumber, setRadicadoNumber] = useState(null);
 
     useEffect(() => {
         setFormData((prev) => ({ ...prev, type: jobTitle || "" }));
@@ -65,6 +67,9 @@ const ModalPostulacion = ({ isOpen, onClose, jobTitle }) => {
             );
 
             if (!response.ok) throw new Error("Error al enviar la postulación");
+
+            const responseData = await response.json();
+            setRadicadoNumber(responseData.fileNumber);
 
             setIsSuccessModalOpen(true);
         } catch (error) {
@@ -169,6 +174,12 @@ const ModalPostulacion = ({ isOpen, onClose, jobTitle }) => {
                         </h2>
                         <p className="text-gray-700 mb-6">
                             Tu información ha sido enviada correctamente.
+                        </p>
+                        <p className="text-gray-700 mb-6">
+                            Radicado: <strong>{radicadoNumber}</strong>
+                        </p>
+                        <p className="text-gray-700 mb-6">
+                            Puedes consultar el estado de tu proceso usando este número.
                         </p>
                         <button
                             onClick={closeSuccessModal}
