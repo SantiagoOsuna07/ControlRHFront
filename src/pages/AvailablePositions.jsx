@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from "react";
 import Header from "../Components/headerPackage/Header";
 import ModalPostulacion from "../Components/modalPackage/ModalPostulacion";
+import SuccessNotification from "../Components/notificationsPackage/SuccessNotification";
+import ErrorNotification from "../Components/notificationsPackage/ErrorNotication";
 
 export default function AvailablePositions() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedJobTitle, setSelectedJobTitle] = useState("");
     const [offers, setOffers] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+    const [errorMessage, setErrorMessage] = useState(null);
+    const [successMessage, setSuccessMessage] = useState(null);
 
     useEffect(() => {
         const fetchOffers = async () => {
@@ -20,8 +23,9 @@ export default function AvailablePositions() {
 
                 const data = await response.json();
                 setOffers(data);
+                setSuccessMessage("Ofertas cargadas correctamente.");
             } catch (error) {
-                setError("Error al obtener las ofertas. Inténtalo nuevamente.");
+                setErrorMessage("Error al obtener las ofertas. Inténtalo nuevamente.");
                 console.error("Error al cargar las ofertas:", error);
             } finally {
                 setLoading(false);
@@ -61,9 +65,12 @@ export default function AvailablePositions() {
                             Vacantes Disponibles
                         </h2>
 
+                        {successMessage && <SuccessMessage message={successMessage} />}
+                        {errorMessage && <ErrorMessage message={errorMessage} />}
+
                         {loading ? (
                             <p className="text-center text-gray-500">Cargando ofertas...</p>
-                        ) : error ? (
+                        ) : errorMessage ? (
                             <p className="text-center text-red-500">{error}</p>
                         ) : offers.length === 0 ? (
                             <p className="text-center text-gray-500">No hay ofertas disponibles.</p>

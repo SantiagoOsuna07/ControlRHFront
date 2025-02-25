@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from "react";
 import LoggedHeader from "../Components/headerPackage/LoggedHeader";
 import SendTestModal from "../Components/modalPackage/SendTestModal";
+import SuccessNotification from "../Components/notificationsPackage/SuccessNotification";
+import ErrorNotification from "../Components/notificationsPackage/ErrorNotication";
 
 const AspirantsPage = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedCandidateId, setSelectedCandidateId] = useState(null);
     const [aspirants, setAspirants] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+    const [errorMessage, setErrorMessage] = useState(null);
+    const [successMessage, setSuccessMessage] = useState(null);
 
     useEffect(() => {
         const fetchAspirants = async () => {
@@ -34,8 +37,9 @@ const AspirantsPage = () => {
 
                 const data = await response.json();
                 setAspirants(data);
+                setSuccessMessage("Aspirantes cargados correctamente.");
             } catch (err) {
-                setError(err.message);
+                setErrorMessage(err.message);
             } finally {
                 setLoading(false);
             }
@@ -57,10 +61,12 @@ const AspirantsPage = () => {
                     Gestión de Pruebas Técnicas
                 </h2>
 
-                {loading && <p className="text-center text-gray-600">Cargando aspirantes...</p>}
-                {error && <p className="text-center text-red-600">Error: {error}</p>}
+                {successMessage && <SuccessMessage message={successMessage} />}
+                {errorMessage && <ErrorMessage message={errorMessage} />}
 
-                {!loading && !error && (
+                {loading && <p className="text-center text-gray-600">Cargando aspirantes...</p>}
+
+                {!loading && !errorMessage && (
                 <div className="overflow-x-auto">
                     <table className="w-full border-collapse bg-white shadow-md rounded-lg">
                         <thead className="bg-purple-600 text-white">

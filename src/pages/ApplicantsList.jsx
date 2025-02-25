@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import LoggedHeader from "../Components/headerPackage/LoggedHeader";
+import SuccessNotification from "../Components/notificationsPackage/SuccessNotification";
+import ErrorNotification from "../Components/notificationsPackage/ErrorNotication";
 
 export default function ApplicantsList({ username, onLogout }) {
     const navigate = useNavigate();
@@ -8,6 +10,10 @@ export default function ApplicantsList({ username, onLogout }) {
     const [filteredApplicants, setFilteredApplicants] = useState([]);
     const [selectedProcess, setSelectedProcess] = useState("");
     const [processes, setProcesses] = useState({});
+    const [modalData, setModalData] = useState(null);
+
+    const [successMessage, setSuccessMessage] = useState("");
+    const [errorMessage, setErrorMessage] = useState("");
 
     useEffect(() => {
         const fetchProcessesAndApplicants = async () => {
@@ -73,6 +79,7 @@ export default function ApplicantsList({ username, onLogout }) {
                 setFilteredApplicants(transformedData);
             } catch (error) {
                 console.error("Error al cargar los datos:", error);
+                setErrorMessage("Hubo un error al cargar los datos.");
             }
         };
 
@@ -87,12 +94,15 @@ export default function ApplicantsList({ username, onLogout }) {
         );
     };
 
-    const handleProcessChange = async (applicant, newProcessId) => {
-        console.log("🟢 handleProcessChange ejecutado con:", { applicant, newProcessId });
+    const handleProcessChange = async () => {
+        if (!modalData) return;
+
+        const { applicant, newProcessId } = modalData;
 
         const token = localStorage.getItem("token");
         if (!token) {
-            console.error("🔴 No se encontró el token. Inicia sesión nuevamente.");
+            console.error("No se encontró el token. Inicia sesión nuevamente.");
+            setErrorMessage("No se encontró el token. Inicia sesión nuevamente.");
             return;
         }
 
@@ -102,10 +112,8 @@ export default function ApplicantsList({ username, onLogout }) {
             type: applicant.cargo,
             nameCandidate: applicant.nombre,
             emailCandidate: applicant.correo,
-            phoneCandidate: applicant.phone || "0000000000"
+            phoneCandidate: applicant.phone || "0000000000",
         };
-
-        console.log("📤 Enviando solicitud PUT con datos:", updatedData);
 
         try {
             const response = await fetch(
@@ -120,14 +128,12 @@ export default function ApplicantsList({ username, onLogout }) {
                 }
             );
 
-            const responseText = await response.text();
-            console.log("📥 Respuesta del backend:", response.status, responseText);
-
             if (!response.ok) {
-                throw new Error(`⚠️ Error HTTP: ${response.status} - ${responseText}`);
+                throw new Error(`Error HTTP: ${response.status}`);
             }
 
             console.log("✅ Proceso actualizado correctamente");
+            setSuccessMessage("Proceso actualizado correctamente.")
 
             // Actualizar la UI inmediatamente después del cambio
             setApplicants((prev) =>
@@ -145,10 +151,12 @@ export default function ApplicantsList({ username, onLogout }) {
                         : app
                 )
             );
-
         } catch (error) {
-            console.error("🔴 Error en handleProcessChange:", error);
+            console.error("Error en handleProcessChange:", error);
+            setErrorMessage("Error al actualizar el proceso.")
         }
+
+        setModalData(null); // Cerrar modal después de actualizar
     };
 
     return (
@@ -178,6 +186,9 @@ export default function ApplicantsList({ username, onLogout }) {
                     </div>
                 </div>
 
+                {successMessage && <SuccessMessage message={successMessage} />}
+                {errorMessage && <ErrorMessage message={errorMessage} />}
+
                 <div className="bg-white p-4 shadow-md rounded-lg">
                     <table className="w-full border border-gray-300 rounded-lg overflow-hidden">
                         <thead className="bg-[#602ba4] text-white">
@@ -189,38 +200,45 @@ export default function ApplicantsList({ username, onLogout }) {
                             </tr>
                         </thead>
                         <tbody>
-                            {filteredApplicants.length > 0 ? (
-                                filteredApplicants.map((applicant, index) => (
-                                    <tr key={index} className="hover:bg-gray-100">
-                                        <td className="border border-gray-300 px-4 py-2">{applicant.nombre}</td>
-                                        <td className="border border-gray-300 px-4 py-2">{applicant.correo}</td>
-                                        <td className="border border-gray-300 px-4 py-2">{applicant.cargo}</td>
-                                        <td className="border border-gray-300 px-4 py-2">
-                                            <select
-                                                value={applicant.processId}
-                                                className="border rounded-md px-2 py-1"
-                                                onChange={(e) => handleProcessChange(applicant, parseInt(e.target.value))}
-                                            >
-                                                {Object.entries(processes).map(([id, name]) => (
-                                                    <option key={id} value={id}>
-                                                        {name}
-                                                    </option>
-                                                ))}
-                                            </select>
-                                        </td>
-                                    </tr>
-                                ))
-                            ) : (
-                                <tr>
-                                    <td colSpan="5" className="text-center text-gray-500 py-4">
-                                        No hay aspirantes disponibles.
+                            {filteredApplicants.map((applicant, index) => (
+                                <tr key={index} className="hover:bg-gray-100">
+                                    <td className="border border-gray-300 px-4 py-2">{applicant.nombre}</td>
+                                    <td className="border border-gray-300 px-4 py-2">{applicant.correo}</td>
+                                    <td className="border border-gray-300 px-4 py-2">{applicant.cargo}</td>
+                                    <td className="border border-gray-300 px-4 py-2">
+                                        <select
+                                            value={applicant.processId}
+                                            className="border rounded-md px-2 py-1"
+                                            onChange={(e) =>
+                                                setModalData({
+                                                    applicant,
+                                                    newProcessId: parseInt(e.target.value),
+                                                })
+                                            }
+                                        >
+                                            {Object.entries(processes).map(([id, name]) => (
+                                                <option key={id} value={id}>
+                                                    {name}
+                                                </option>
+                                            ))}
+                                        </select>
                                     </td>
                                 </tr>
-                            )}
+                            ))}
                         </tbody>
                     </table>
                 </div>
             </div>
+
+            {modalData && (
+                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+                    <div className="bg-white p-6 rounded shadow-lg">
+                        <p>¿Seguro que deseas cambiar el proceso de {modalData.applicant.nombre}?</p>
+                        <button onClick={handleProcessChange} className="bg-green-500 text-white px-4 py-2 rounded">Confirmar</button>
+                        <button onClick={() => setModalData(null)} className="ml-2 bg-red-500 text-white px-4 py-2 rounded">Cancelar</button>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

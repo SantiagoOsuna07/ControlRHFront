@@ -2,18 +2,25 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import LoggedHeaderOf from "../Components/headerPackage/LoggedHeaderOf";
 import Card from "../Components/cardPackage/Card";
+import SuccessNotification from "../Components/notificationsPackage/SuccessNotification";
+import ErrorNotification from "../Components/notificationsPackage/ErrorNotication";
 
 export default function AdminDashboard({ username, onLogout }) {
     const navigate = useNavigate();
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [successMessage, setSuccessMessage] = useState(null);
+    const [errorMessage, setErrorMessage] = useState(null);
 
     const openModal = () => setIsModalOpen(true);
-
     const closeModal = () => setIsModalOpen(false);
 
     const confirmNavigation = () => {
         closeModal();
-        navigate("/performance-evaluations");
+        setSuccessMessage("Redirigiendo a Evaluaciones de Desempeño...");
+
+        setTimeout(() => {
+            window.location.href = "http://192.168.40.106/RRHH.Client/";
+        })
     };
 
     return (
@@ -25,17 +32,26 @@ export default function AdminDashboard({ username, onLogout }) {
                     <Card   
                         title="Lista de aspirantes"
                         description="Ver todos los aspirantes que hay en el momento."
-                        onClick={() => navigate("/applicants-list")}
+                        onClick={() => {
+                            setSuccessMessage("Cargando Lista de Aspirantes...");  
+                            navigate("/applicants-list");
+                        }}
                     />
                     <Card
                         title="Inventario Empleados"
                         description="Gestiona el inventario de la empresa."
-                        onClick={() => navigate("/hires-inventory")}
+                        onClick={() => {
+                            setSuccessMessage("Cargando Inventario de Empleados...");  
+                            navigate("/hires-inventory");
+                        }}
                     />
                     <Card
                         title="Hojas de vida"
                         description="Gestiona todas las hojas de vida"
-                        onClick={() => navigate("/employees-list")}
+                        onClick={() => {
+                            setSuccessMessage("Cargando Hojas de Vida...")
+                            navigate("/employees-list")
+                        }}
                     />
                     <Card
                         title="Evaluaciones de desempeño"
@@ -69,6 +85,13 @@ export default function AdminDashboard({ username, onLogout }) {
                         </div>
                     </div>
                 </div>
+            )}
+
+            {successMessage && (
+                <SuccessNotification message={successMessage} onClose={() => setSuccessMessage(null)} />
+            )}
+            {errorMessage && (
+                <ErrorNotification message={errorMessage} onClose={() => setErrorMessage(null)} />
             )}
         </div>
     );
